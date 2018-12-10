@@ -1,0 +1,465 @@
+body
+{
+	margin:0 0;
+	background-color: #f6f6f6;
+	font-family:sans-serif;
+	font-size: 16px;
+}
+/*头部图片*/
+.headpic
+{
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+/*导航栏*/
+
+ul.navbar
+{
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0px;
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+    width: 100%;
+	box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.2); 
+}
+/*导航栏中间*/
+div.center
+{
+	margin: auto;
+}
+.center>li 
+{
+    float: left;
+}
+.center>li a 
+{
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+/*非当前项目鼠标悬浮*/
+.center>li a:hover:not(.active) 
+{
+    /*background-color: #111;*/
+	color: #4CAF50;
+}
+/*当前项目*/
+.center .active 
+{
+    /*background-color: #4CAF50;*/
+	color: #4CAF50;
+	border-bottom: 3px solid #4CAF50;
+	font-weight:bold;
+}
+
+/*导航栏2*/
+.navbar2
+{
+	display: block;
+	width: 100%;
+	height: auto;
+	background-color: white;
+	box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.2);
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	margin: 0;
+	padding: 10px 10px;
+	overflow: auto;
+	box-sizing: border-box;
+}
+/*导航栏2菜单*/
+#navbar-menu
+{
+	cursor: pointer;
+}
+/*侧边抽屉*/
+.drawer
+{
+  position:fixed;
+  width:260px;
+  height:100%;
+  top: 0px;
+  bottom: 0px;
+  left:-300px;
+  background:white;
+  z-index:1000;  
+  box-shadow:5px 0px 10px rgba(0,0,0,.2);
+  transition:all 0.3s;
+  box-sizing:border-box;
+}
+/*导航栏2的遮罩*/
+.mask{
+  display:none;
+  position:fixed;
+  height:100%;
+  width:100%;
+  top: 0px;
+  bottom: 0px;
+  background:rgba(0,0,0,0.6);
+  z-index:500;
+}
+/*导航栏2图片*/
+#drawerpic
+{
+	width: 100%;
+	bottom: 0px;
+	margin: 0px;
+	display: block;
+}
+/*导航栏2的项目列表*/
+ul.drawernav
+{
+	top: 0px;
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+    width: 100%; 
+}
+.drawernav>li 
+{
+    display: block;
+}
+.drawernav>li a 
+{
+    display: block;
+    color: black;
+    text-align: left;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+/*非当前项目鼠标悬浮*/
+.drawernav>li a:hover:not(.active) 
+{
+    background-color: #e0e0e0;
+	color: #4CAF50;
+}
+/*当前项目*/
+.drawernav .active 
+{
+    background-color: #eeeeee;
+	color: #4CAF50;
+	border-left: 3px solid #4CAF50;
+	font-weight:bold;
+}
+
+
+/*悬浮按钮*/
+.floating_button
+{
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	cursor: pointer;
+}
+#button1
+{
+	width: 40px;
+	height: 40px;
+	display: none;
+	border: 0px solid;
+	border-radius: 3px;
+	box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.2);
+	margin-bottom: 10px;
+	transition: 0.5s;
+	background-color: white;
+}
+/* #button1:hover
+{
+	filter:brightness(80%);
+	box-shadow: none;
+} */
+#button2
+{
+	width: 40px;
+	height: 40px;
+	display: block;
+	border: 0px solid;
+	border-radius: 3px;
+	box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.2);
+	margin-top: 10px;
+	transition: 0.5s;
+	background-color: white;
+}
+/* #button2:hover
+{
+	filter:brightness(80%);
+	box-shadow: none;
+} */
+/*悬浮按钮旁的提示框*/
+#tooltiptext1
+{
+    visibility: hidden;
+    width: 80px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 4px;
+    right: 130%;
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
+#tooltiptext1::after 
+{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+}
+/* #tooltip1:hover #tooltiptext1 
+{
+    visibility: visible;
+	opacity: 1;
+} */
+
+
+
+/*3栏布局*/
+@media (min-width: 1030px) 
+{
+	/*容器*/
+	.container 
+	{
+	
+	width:70%;
+	margin: auto;
+	box-sizing: border-box;
+	padding: 7px;
+	}
+	.column
+	{
+		width: 33.3%;
+		float: left;
+	}
+	.container2
+	{
+		width:70%;
+		margin: auto;
+		box-sizing: border-box;
+		padding: 10px;
+	}
+	
+	/*导航栏*/
+	ul.navbar
+	{
+		display: block;
+	}
+	div.center
+	{
+		width: 70%;
+	}
+	.navbar2
+	{
+		display: none;
+	}
+            
+}
+
+/*2栏布局 空白较大*/
+@media (min-width: 991px) and (max-width: 1029px) 
+{
+	/*容器*/
+	.container 
+	{
+		column-count: 2;
+		width:80%;
+		margin: auto;
+		box-sizing: border-box;
+		column-gap: 0;
+		padding: 7px;
+	}
+	.container2
+	{
+		width:80%;
+		margin: auto;
+		box-sizing: border-box;
+		padding: 10px;
+	}
+	
+	/*导航栏*/
+	ul.navbar
+	{
+		display: block;
+	}
+	div.center
+	{
+		width: 80%;
+	}
+	.navbar2
+	{
+		display: none;
+	}
+            
+}
+		
+/*2栏布局 空白较小*/
+@media (min-width: 761px) and (max-width: 990px) 
+{
+	/*容器*/
+	.container 
+	{
+		column-count: 2;
+		width:90%;
+		margin: auto;
+		box-sizing: border-box;
+		column-gap: 0;
+		padding: 7px;
+	}
+	.container2
+	{
+		width:90%;
+		margin: auto;
+		box-sizing: border-box;
+		padding: 10px;
+	}
+	
+	/*导航栏*/
+	ul.navbar
+	{
+		display: block;
+	}
+	div.center
+	{
+		width: 90%;
+	}
+	.navbar2
+	{
+		display: none;
+	}
+            
+}
+
+/*2栏布局 没有空白 导航栏2*/
+@media (min-width: 518px) and (max-width: 760px) 
+{
+	/*容器*/
+	.container 
+	{
+		column-count: 2;
+		width:100%;
+		margin: auto;
+		box-sizing: border-box;
+		column-gap: 0;
+		padding: 7px;
+	}
+	.container2
+	{
+		width:100%;
+		margin: auto;
+		box-sizing: border-box;
+		padding: 10px;
+	}
+	
+	/*导航栏*/
+	ul.navbar
+	{
+		display: none;
+	}
+	.navbar2
+	{
+		display: block; 
+	}
+            
+}
+/*1栏布局 导航栏2*/
+@media (max-width: 518px) 
+{
+	/*容器*/
+	.container 
+	{
+		column-count: 1;
+		width: 100%;
+		margin: auto;
+		box-sizing: border-box;
+		column-gap: 0;
+		padding: 7px;
+	}
+	.container2
+	{
+		width:100%;
+		margin: auto;
+		box-sizing: border-box;
+		padding: 10px;
+	}
+	
+	/*导航栏*/
+	ul.navbar
+	{
+		display: none;
+	}
+	.navbar2
+	{
+		display: block;
+	}	
+}
+
+
+/*小卡片*/
+.unit
+{
+	background-color: white;
+	height: auto;
+	border: 0px solid;
+	border-radius: 5px;
+	box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.2);
+	margin: auto;
+	margin: 7px;
+	overflow: hidden;
+	transition: 0.5s;
+	display: inline-block;
+	break-inside: avoid;
+}
+/*卡片中的图片*/
+.unit_pic
+{
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+/*卡片中的文字（图片）*/
+.unit_text_pic
+{
+	display: block;
+	text-align: justify;
+	padding: 10px 20px;
+}
+/*大卡片*/
+.unit2
+{
+	width: 100%;
+	background-color: white;
+	height: auto;
+	border: 0px solid;
+	border-radius: 5px;
+	box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.2);
+	margin: 10px auto;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+/*卡片中的文字（正常）*/
+.unit_text_normal
+{
+	display: block;
+	padding: 40px;
+	text-align: justify;
+}

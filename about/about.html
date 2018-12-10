@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no">
+<title>关于我们</title>
+<link rel="stylesheet" type="text/css" href="about.css">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+
+<body>
+
+<!--头部图片-->
+<img class="headpic" src="pic6-1.jpg">
+
+<!--导航栏-->
+
+	<ul class="navbar">
+	<div class="center">
+		<li><a href="../main/main.html">精选动态</a></li>
+		<li><a href="../pic/pic.html">图片广场</a></li>
+		<li><a href="../memory/memory.html">珞珈记忆</a></li>
+		<li><a href="../dairy/dairy.html">珞珈日记</a></li>
+		<li><a href="../food/food.html">寻味珞珈</a></li>
+		<li><a class="active" href="../about/about.html">关于我们</a></li>
+		<li style="float:right"><a href="../login/login.html">登录</a></li>
+	</div>
+	</ul>
+	
+<!--导航栏2-->
+<div class="navbar2">
+	<img src="menu.svg" id="navbar-menu" style="float:left">
+	<a href="../login/login.html"><img src="account.svg" id="navbar-account" style="float:right"></a>
+</div>
+<!-- 抽屉展开后的遮罩 -->
+<div class="mask"></div>
+<!-- 左侧抽屉 -->
+<div class="drawer">
+	<img src="nav.jpg" id="drawerpic">
+	<ul class="drawernav">
+		<li><a href="../main/main.html">精选动态</a></li>
+		<li><a class="active" href="../pic/pic.html">图片广场</a></li>
+		<li><a href="../memory/memory.html">珞珈记忆</a></li>
+		<li><a href="../dairy/dairy.html">珞珈日记</a></li>
+		<li><a href="../food/food.html">寻味珞珈</a></li>
+		<li><a href="../about/about.html">关于我们</a></li>
+	</ul>
+</div>
+<!-- js：左侧抽屉 -->
+<script>
+var body = document.body;
+var menu = document.getElementById("navbar-menu");
+var drawer = document.querySelector(".drawer");
+var mask = document.querySelector(".mask");
+menu.onclick = function()
+{
+  drawer.style.left = "0";
+  mask.style.display = "block";
+  body.style.overflow = "hidden";
+}
+mask.onclick = function()
+{
+    drawer.style.left = "-300px";
+    mask.style.display = "none";
+	body.style.overflow = "auto";
+}
+</script>
+
+
+<!--悬浮按钮-->
+<div class="floating_button">
+	<div id="tooltip1"><img id="button1" src="button1.svg"><span id="tooltiptext1">回到顶部</span></div>
+
+</div>
+
+
+<!--js：回到顶部-->
+<script>
+window.addEventListener('scroll',winScroll);
+var button1 = document.getElementById("button1");
+function winScroll() //滚动监听，控制回顶按钮显示或消失
+{
+	if(document.body.scrollTop > 250 || document.documentElement.scrollTop > 250)
+		button1.style.display = "block";
+	else
+		button1.style.display = "none";
+}
+
+/*滚动回顶*/
+var timer  = null;
+button1.onclick = function(){
+    cancelAnimationFrame(timer);
+    
+    var startTime = +new Date();  //获取当前毫秒数   
+    
+    var b = document.body.scrollTop || document.documentElement.scrollTop;//获取当前页面的滚动高度
+    var d = 500; //500ms
+    var c = b;
+    timer = requestAnimationFrame(function func(){
+        var t = d - Math.max(0,startTime - (+new Date()) + d);
+        document.documentElement.scrollTop = document.body.scrollTop = t * (-c) / d + b;
+        timer = requestAnimationFrame(func);
+        if(t == d){
+          cancelAnimationFrame(timer);
+        }
+    });
+}
+</script>
+	
+	
+
+<!--容器-->
+
+<div class="container">
+	
+	<div class="column">
+	<!--图片卡片 小组-->
+	<div class="unit">
+		<img class="unit_pic" src="p1.jpg">
+		<div class="unit_text_pic">
+			我们的小组：吉祥物--珞小珈
+			<br>
+			<b>我的内心剧烈波动，不禁使出了波动拳</b>
+			<s>(我的内心毫无波动，甚至还想笑)</s>
+			<br>
+			
+		</div>
+	</div>
+	</div>
+	
+	<div class="column">
+	<!--图片卡片 zhb-->
+	<div class="unit">
+		<img class="unit_pic" src="p2.jpg">
+		<div class="unit_text_pic">
+		小组成员：朱华彬
+		<br><br>
+		18级计院9班
+		</div>
+	</div>
+	</div>
+	
+	<div class="column">
+	<!--图片卡片 lzm-->
+	<div class="unit">
+		<img class="unit_pic" src="p3.jpg">
+		<div class="unit_text_pic">
+		小组成员：李政民
+		<br><br>
+		18级计院9班
+		</div>
+	</div>
+	</div>
+	
+</div>
+	
+<div class="container2">
+	<!--大卡片-->
+	<div class="unit2">
+		<div class="unit_text_normal">
+		队长感言：
+		<br><br>
+		大家可以叫我阿政。
+		<br>
+		我喜欢跑步、听音乐、打排球，还有学习。
+		<br>
+		作为一名资深小白我觉得这一次参加零杯对于我来说是一次很好的锻炼的机会，
+		最后的名次已经不是那么的重要，毕竟身为一名计算机学院的学生，
+		还有很多的东西需要去学习去钻研。
+		在为零杯准备的过程中在伙伴的身上看到了很多值得学习的东西：
+		将比赛的准备和计划都安排好，有条不紊地按照计划去实施，
+		并且一直在网上寻找资源学习和虚心向学长请教问题，
+		在修不好的bug的时候，就算耗费了很多时间也不轻言放弃。
+		就是这样坚持的精神让我们在这三个星期里，
+		做出了这样一个不是那么丑陋的“一珈人”网站。
+		<br><br>
+		感恩一切，我们会继续待着梦想前行。
+		<br><br>
+		最后要感谢吴海旭同学对一些照片的贡献。
+
+		</div>
+	</div>
+	
+	<div class="unit2">
+		<div class="unit_text_normal">
+		队员感言：
+		<br><br>
+		其实一开始我是不太愿意参加的，毕竟只学了一点点HTML的知识。
+		不过为了拯救我少得可怜的活动分，还是硬着头皮参加了……
+		于是，在这三周的时间里，自学了CSS，看了一点JavaScript，甚至还学了Git（虽然并没有派上用场）。
+		在这次活动中学到了很多新知识，见识到了网页制作中各种思路清奇的“骚操作”，也算是收获良多吧。
+		虽然说“名次不重要”，但要是真能进决赛的话，我们还是会很高兴的。
+		<br><br>
+		Stay Hungry, Stay Foolish. 
+		沉迷学习……
+		</div>
+	</div>
+</div>
+
+<body>
