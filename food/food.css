@@ -1,0 +1,716 @@
+body
+{
+	margin:0 0;
+	background-color: #f6f6f6;
+	font-family:sans-serif;
+	font-size: 16px;
+}
+/*头部图片*/
+.headpic
+{
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+/*导航栏*/
+
+ul.navbar
+{
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0px;
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+    width: 100%;
+	box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.2); 
+}
+/*导航栏中间*/
+div.center
+{
+	margin: auto;
+}
+.center>li 
+{
+    float: left;
+}
+.center>li a 
+{
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+/*非当前项目鼠标悬浮*/
+.center>li a:hover:not(.active) 
+{
+    /*background-color: #111;*/
+	color: #4CAF50;
+}
+/*当前项目*/
+.center .active 
+{
+    /*background-color: #4CAF50;*/
+	color: #4CAF50;
+	border-bottom: 3px solid #4CAF50;
+	font-weight:bold;
+}
+
+/*导航栏2*/
+.navbar2
+{
+	display: block;
+	width: 100%;
+	height: auto;
+	background-color: white;
+	box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.2);
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	margin: 0;
+	padding: 10px 10px;
+	overflow: auto;
+	box-sizing: border-box;
+}
+/*导航栏2菜单*/
+#navbar-menu
+{
+	cursor: pointer;
+}
+/*侧边抽屉*/
+.drawer
+{
+  position:fixed;
+  width:260px;
+  height:100%;
+  top: 0px;
+  bottom: 0px;
+  left:-300px;
+  background:white;
+  z-index:1000;  
+  box-shadow:5px 0px 10px rgba(0,0,0,.2);
+  transition:all 0.3s;
+  box-sizing:border-box;
+}
+/*导航栏2的遮罩*/
+.mask{
+  display:none;
+  position:fixed;
+  height:100%;
+  width:100%;
+  top: 0px;
+  bottom: 0px;
+  background:rgba(0,0,0,0.6);
+  z-index:500;
+}
+/*导航栏2图片*/
+#drawerpic
+{
+	width: 100%;
+	bottom: 0px;
+	margin: 0px;
+	display: block;
+}
+/*导航栏2的项目列表*/
+ul.drawernav
+{
+	top: 0px;
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+    width: 100%; 
+}
+.drawernav>li 
+{
+    display: block;
+}
+.drawernav>li a 
+{
+    display: block;
+    color: black;
+    text-align: left;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+/*非当前项目鼠标悬浮*/
+.drawernav>li a:hover:not(.active) 
+{
+    background-color: #e0e0e0;
+	color: #4CAF50;
+}
+/*当前项目*/
+.drawernav .active 
+{
+    background-color: #eeeeee;
+	color: #4CAF50;
+	border-left: 3px solid #4CAF50;
+	font-weight:bold;
+}
+
+
+/*悬浮按钮*/
+.floating_button
+{
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	cursor: pointer;
+}
+#button1
+{
+	width: 40px;
+	height: 40px;
+	display: none;
+	border: 0px solid;
+	border-radius: 3px;
+	box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.2);
+	margin-bottom: 10px;
+	transition: 0.5s;
+	background-color: white;
+}
+/* #button1:hover
+{
+	filter:brightness(80%);
+	box-shadow: none;
+} */
+#button2
+{
+	width: 40px;
+	height: 40px;
+	display: block;
+	border: 0px solid;
+	border-radius: 3px;
+	box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.2);
+	margin-top: 10px;
+	transition: 0.5s;
+	background-color: white;
+}
+/* #button2:hover
+{
+	filter:brightness(80%);
+	box-shadow: none;
+} */
+/*悬浮按钮旁的提示框*/
+#tooltiptext1
+{
+    visibility: hidden;
+    width: 80px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 4px;
+    right: 130%;
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
+#tooltiptext1::after 
+{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+}
+/* #tooltip1:hover #tooltiptext1 
+{
+    visibility: visible;
+	opacity: 1;
+} */
+#tooltiptext2
+{
+    visibility: hidden;
+    width: 80px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 4px;
+    right: 130%;
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
+#tooltiptext2::after 
+{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+}
+/* #tooltip2:hover #tooltiptext2 
+{
+    visibility: visible;
+	opacity: 1;
+} */
+
+
+
+
+/*2栏布局 空白很大*/
+@media (min-width: 1030px) 
+{
+	/*容器*/
+	.container 
+	{
+	column-count: 2;
+	width:70%;
+	margin: auto;
+	box-sizing: border-box;
+	column-gap: 0;
+	padding: 7px;
+	}
+	
+	/*导航栏*/
+	ul.navbar
+	{
+		display: block;
+	}
+	div.center
+	{
+		width: 70%;
+	}
+	.navbar2
+	{
+		display: none;
+	}
+            
+}
+
+/*2栏布局 空白较大*/
+@media (min-width: 991px) and (max-width: 1029px) 
+{
+	/*容器*/
+	.container 
+	{
+		column-count: 2;
+		width:80%;
+		margin: auto;
+		box-sizing: border-box;
+		column-gap: 0;
+		padding: 7px;
+	}
+	
+	/*导航栏*/
+	ul.navbar
+	{
+		display: block;
+	}
+	div.center
+	{
+		width: 80%;
+	}
+	.navbar2
+	{
+		display: none;
+	}
+            
+}
+		
+/*2栏布局 空白较小*/
+@media (min-width: 761px) and (max-width: 990px) 
+{
+	/*容器*/
+	.container 
+	{
+		column-count: 2;
+		width:90%;
+		margin: auto;
+		box-sizing: border-box;
+		column-gap: 0;
+		padding: 7px;
+	}
+	
+	/*导航栏*/
+	ul.navbar
+	{
+		display: block;
+	}
+	div.center
+	{
+		width: 90%;
+	}
+	.navbar2
+	{
+		display: none;
+	}
+            
+}
+
+/*2栏布局 没有空白 导航栏2*/
+@media (min-width: 519px) and (max-width: 760px) 
+{
+	/*容器*/
+	.container 
+	{
+		column-count: 2;
+		width:100%;
+		margin: auto;
+		box-sizing: border-box;
+		column-gap: 0;
+		padding: 7px;
+	}
+	
+	/*导航栏*/
+	ul.navbar
+	{
+		display: none;
+	}
+	.navbar2
+	{
+		display: block; 
+	}
+            
+}
+/*1栏布局 导航栏2*/
+@media (max-width: 518px) 
+{
+	/*容器*/
+	.container 
+	{
+		column-count: 1;
+		width: 100%;
+		margin: auto;
+		box-sizing: border-box;
+		column-gap: 0;
+		padding: 7px;
+	}
+	
+	/*导航栏*/
+	ul.navbar
+	{
+		display: none;
+	}
+	.navbar2
+	{
+		display: block;
+	}
+
+	
+	
+}
+
+	
+
+/*卡片*/
+.unit
+{
+	background-color: white;
+	height: auto;
+	border: 0px solid;
+	border-radius: 5px;
+	box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.2);
+	margin: auto;
+	margin: 7px;
+	overflow: hidden;
+	transition: 0.5s;
+	display: inline-block;
+	break-inside: avoid;
+}
+/*鼠标悬浮在卡片上*/
+/* .unit:hover
+{
+	box-shadow: 0px 2px 5px 3px rgba(0,0,0,0.2);
+} */
+/*卡片中的图片*/
+.unit_pic
+{
+	display: block;
+	width: 100%;
+	height: auto;
+	cursor: pointer;
+	cursor:zoom-in;
+}
+
+/*卡片中的文字（图片）*/
+.unit_text_pic
+{
+	display: block;
+	text-align: center;
+	padding: 10px 20px;
+}
+/*卡片中的文字（正常）*/
+.unit_text_normal
+{
+	display: block;
+	padding: 20px;
+	text-align: justify;
+	cursor: pointer;
+	
+}
+/*卡片中的链接*/
+.unit a:link,.unit a:visited
+{
+	color: #4dad51;
+	text-decoration:none;
+}
+.unit a:hover,.unit a:active
+{
+	text-decoration:underline;
+}
+
+/*点击图片弹出*/
+/*模态窗口的背景*/
+.modal
+{
+    box-sizing: border-box;
+	display: none; 
+    position: fixed; 
+    z-index: 1;  
+    left: 0;
+	right: 0;
+    top: 0;
+	bottom: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.6); 
+	align-items: center;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	justify-content: center;
+	/* flex-shrink:0; */
+}
+/*模态窗口的图片*/
+.modal-content 
+{
+	margin: 10px;
+    display: block; 
+	height: auto;
+	max-width: 100%;
+	max-height: 80%;
+	box-sizing: border-box;
+	cursor: zoom-out;
+}
+
+/*图片标题*/
+#caption 
+{
+	margin: 0;
+    display: block;
+    width: 55%;
+	max-width: 100%;
+    text-align: center;
+    color: white;
+    padding: 10px 0;
+	box-sizing: border-box;
+}
+
+/*添加动画*/
+.modal-content, #caption 
+{    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom 
+{
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes zoom 
+{
+    from {transform: scale(0.1)} 
+    to {transform: scale(1)}
+}
+
+
+
+/*点击按钮弹出编写框*/
+/*模态窗口的背景*/
+.modal3
+{
+    display: none;
+    position: fixed;
+	box-sizing: border-box;
+    z-index: 1;
+    left: 0;
+    top: 0;
+	right: 0;
+	bottom: 0;
+    width: 100vw;
+    height: 100vh; 
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+}
+
+/*模态窗口的编写卡片*/
+
+.modal-content3
+{
+    margin: auto;
+	position: fixed;
+	padding: 10px 50px 10px 50px;
+	background-color: white;
+	border:0px solid;
+	border-radius: 5px;
+    display: block;
+	overflow: hidden;
+	width: 400px;
+	height: 490px;
+	overflow: auto;
+	font-size: 18px;
+	text-align: justify;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+}
+
+
+@media only screen and (max-width: 539px)
+{
+	.modal-content3
+	{
+		width: auto;
+		height: 100%;
+		padding: 20px;
+		border-radius: 0px;
+		box-sizing: border-box;
+	}
+}
+.headtext
+{
+	font-size: 25px;
+	margin-bottom: 16px;
+	font-weight: bold;
+}
+.belowtext
+{
+	font-size: 16px;
+	margin: 0;
+}
+/*标题输入框*/
+#title
+{
+	display: block;
+	width: 100%;
+	padding: 10px;
+	margin: 6px 0px 16px 0px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 16px;
+	outline: none;
+	transition: 0.5s;
+}
+#title:hover
+{
+	border: 1px solid #4CAF50;
+}
+#title:focus
+{
+	border: 1px solid #4CAF50;
+	box-shadow: 0 0 5px #4CAF50;
+}
+/*textarea文章输入框*/
+#article
+{
+	display: block;
+	resize: none;
+	font-family: sans-serif;
+	width: 100%;
+	height: 200px;
+	padding: 10px;
+	margin: 6px 0px 16px 0px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 16px;
+	outline: none;
+	transition: 0.5s;
+}
+#article:hover
+{
+	border: 1px solid #4CAF50;
+}
+#article:focus
+{
+	border: 1px solid #4CAF50;
+	box-shadow: 0 0 5px #4CAF50;
+}
+/*发布按钮*/
+#sent-button
+{
+	display: block;
+	cursor: pointer;
+	border: 0px solid;
+	border-radius: 3px;
+	background-color: #4CAF50;
+    color: white;
+    padding: 6px 20px;
+	margin-top: 12px;
+	font-size: 16px;
+	outline: none;
+	transition: 0.5s;
+	
+}
+#sent-button:hover
+{
+	background-color: #479e4b;
+}
+/*添加动画3*/
+.modal-content3
+{    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom 
+{
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes zoom 
+{
+    from {transform: scale(0.1)} 
+    to {transform: scale(1)}
+}
+
+/*关闭按钮3*/
+.close3
+{
+    position: absolute;
+	top: 22px;
+	right: 12px;
+    color: #6e6e6e;
+    font-size: 35px;
+	line-height: 0px;
+	letter-spacing: 0px;
+    /* font-weight: lighter; */
+    transition: 0.4s;
+}
+
+.close3:hover, .close3:focus 
+{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
