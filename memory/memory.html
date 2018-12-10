@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no">
+<title>珞珈记忆</title>
+<link rel="stylesheet" type="text/css" href="memory.css">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+
+<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+<script src="http://webapi.amap.com/maps?v=1.3&key=wudamapkey"></script>
+<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    
+
+</head>
+
+<body>
+
+<!--头部图片-->
+<img class="headpic" src="pic6-1.jpg">
+
+<!--导航栏-->
+
+	<ul class="navbar">
+	<div class="center">
+		<li><a href="../main/main.html">精选动态</a></li>
+		<li><a href="../pic/pic.html">图片广场</a></li>
+		<li><a class="active" href="../memory/memory.html">珞珈记忆</a></li>
+		<li><a href="../dairy/dairy.html">珞珈日记</a></li>
+		<li><a href="../food/food.html">寻味珞珈</a></li>
+		<li><a href="../about/about.html">关于我们</a></li>
+		<li style="float:right"><a href="../login/login.html">登录</a></li>
+	</div>
+	</ul>
+	
+
+<!--导航栏2-->
+<div class="navbar2">
+	<img src="menu.svg" id="navbar-menu" style="float:left">
+	<a href="../login/login.html"><img src="account.svg" id="navbar-account" style="float:right"></a>
+</div>
+<!-- 抽屉展开后的遮罩 -->
+<div class="mask"></div>
+<!-- 左侧抽屉 -->
+<div class="drawer">
+	<img src="nav.jpg" id="drawerpic">
+	<ul class="drawernav">
+		<li><a href="../main/main.html">精选动态</a></li>
+		<li><a href="../pic/pic.html">图片广场</a></li>
+		<li><a class="active" href="../memory/memory.html">珞珈记忆</a></li>
+		<li><a href="../dairy/dairy.html">珞珈日记</a></li>
+		<li><a href="../food/food.html">寻味珞珈</a></li>
+		<li><a href="../about/about.html">关于我们</a></li>
+	</ul>
+</div>
+<!-- js：左侧抽屉 -->
+<script>
+var body = document.body;
+var menu = document.getElementById("navbar-menu");
+var drawer = document.querySelector(".drawer");
+var mask = document.querySelector(".mask");
+menu.onclick = function()
+{
+  drawer.style.left = "0";
+  mask.style.display = "block";
+  body.style.overflow = "hidden";
+}
+mask.onclick = function()
+{
+    drawer.style.left = "-300px";
+    mask.style.display = "none";
+	body.style.overflow = "auto";
+}
+</script>
+	
+
+<!--图片预加载-->	
+<div id="preload">
+</div>
+	
+<!--模态窗口(图片)-->
+<div id="myModal" class="modal">
+  <img class="modal-content" id="pop_pic" onload="picSizeFunction(this)">
+  <div id="caption"></div>
+</div>
+
+<!--备用：用js调整图片大小
+<img class="modal-content" id="pop_pic" onload="picSizeFunction(this)">
+<script>
+function picSizeFunction(obj)
+{
+	if(((obj.width)*(document.body.clientHeight))>((obj.height)*(document.body.clientWidth)))
+	{
+	obj.style.width="100%";
+	}
+	if(((obj.width)*(document.body.clientHeight))<=((obj.height)*(document.body.clientWidth)))
+	{
+	obj.style.height="80%";
+	}
+}
+</script>
+-->
+
+<!--模态窗口（编写）-->
+<div id="myModal3" class="modal3">
+	
+	<div class="modal-content3" id="pop_contant3">
+		<div class="close3">×</div>
+		<form>
+		<p class="headtext">说点什么吧</p><!--分享你此刻的想法/有什么想和大家分享的？-->
+		<p class="belowtext">标题</p>
+		<input type="text" id="title" maxlength="30" placeholder="在这里填写标题" autocomplete="off">
+		<p class="belowtext">正文</p>
+		<textarea id="article" placeholder="有什么想和大家分享的？" autocomplete="off"></textarea>
+		<!--
+		<input type="file" style="margin-bottom: 12px">
+		<br>
+		-->
+		<input type="checkbox" id="checkbox"></input>
+		<label for="checkbox">匿名发表</label>
+		<button id="sent-button">发布</button>
+		</form>
+	</div>
+	<div id="caption3"></div>
+</div>
+
+<!--悬浮按钮-->
+<div class="floating_button">
+	<a href="#top"><div id="tooltip1"><img id="button1" src="button1.svg"><span id="tooltiptext1">回到顶部</span></div></a>
+	<div id="tooltip2"><img id="button2" src="button2.svg"><span id="tooltiptext2">发表动态</span></div>
+	<!--js：编写窗口-->
+		<script>
+		// 获取模态窗口
+		var modal3 = document.getElementById("myModal3");
+		var body = document.body;
+		// 获取编写模态框
+		var button2 = document.getElementById("button2");
+		button2.onclick = function()
+		{
+			modal3.style.display = "block";
+			body.style.overflow = "hidden";
+		}
+
+		// 获取 <span> 元素，设置关闭模态框按钮
+		var span = document.getElementsByClassName("close3")[0];
+
+		// 点击 <span> 元素上的叉, 关闭模态窗口
+		span.onclick = function()
+		{ 
+			modal3.style.display = "none";
+			body.style.overflow = "auto";
+		}
+		</script>
+</div>
+
+
+<!--js：回到顶部-->
+<script>
+window.addEventListener('scroll',winScroll);
+var button1 = document.getElementById("button1");
+function winScroll() //滚动监听，控制回顶按钮显示或消失
+{
+	if(document.body.scrollTop > 250 || document.documentElement.scrollTop > 250)
+		button1.style.display = "block";
+	else
+		button1.style.display = "none";
+}
+
+/*滚动回顶*/
+var timer  = null;
+button1.onclick = function(){
+    cancelAnimationFrame(timer);
+    
+    var startTime = +new Date();  //获取当前毫秒数   
+    
+    var b = document.body.scrollTop || document.documentElement.scrollTop;//获取当前页面的滚动高度
+    var d = 500; //500ms
+    var c = b;
+    timer = requestAnimationFrame(function func(){
+        var t = d - Math.max(0,startTime - (+new Date()) + d);
+        document.documentElement.scrollTop = document.body.scrollTop = t * (-c) / d + b;
+        timer = requestAnimationFrame(func);
+        if(t == d){
+          cancelAnimationFrame(timer);
+        }
+    });
+}
+</script>
+
+
+<!--容器-->
+
+<div class="container">
+
+	<div class="column">
+	
+		<!-- 高德地图	 -->
+		<div class="unit" style="padding: 0px;">
+		<div id="mapcontainer"></div>
+		
+ <script>
+     var map = new AMap.Map('mapcontainer', {
+         resizeEnable: true,//意思是是否监控地图容器尺寸变化，数值为Boolean型，默认值为false
+         zoom:15,  //地图大小级别
+         center: [114.365254, 30.538265]//中心点经纬度坐标
+     });
+	 
+	    
+//行政楼标记
+	      var infoWindow_0 = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true,  //使用自定义窗体
+        content:'<div><a href="#C行政楼">行政楼</a></div>', //信息窗体的内容可以是任意html片段
+        offset: new AMap.Pixel(0, -30)  //第一个数字表示信息内容左右偏移，第二个表示上下偏移
+    });
+    var onMarkerClick  =  function(e) {
+        infoWindow_0.open(map, e.target.getPosition());//打开信息窗体
+        //e.target就是被点击的Marker
+    } 
+    var marker = new AMap.Marker({
+         position: [114.366465, 30.537573]  //经纬度位置
+    })
+    map.add(marker);//添加到地图
+    marker.on('click',onMarkerClick);//绑定click事件
+	
+	
+//卓尔体育馆标记
+	      var infoWindow_1 = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true,  //使用自定义窗体
+        content:'<div><a href="#C卓尔体育馆">卓尔体育馆</a></div>', //信息窗体的内容可以是任意html片段
+        offset: new AMap.Pixel(0, -30)//第一个数字表示信息内容左右偏移，第二个表示上下偏移
+    });
+    var onMarkerClick  =  function(e) {
+        infoWindow_1.open(map, e.target.getPosition());//打开信息窗体
+        //e.target就是被点击的Marker
+    } 
+    var marker = new AMap.Marker({
+         position: [114.358278, 30.538174] //经纬度位置
+    })
+    map.add(marker);//添加到地图
+    marker.on('click',onMarkerClick);//绑定click事件
+	
+	
+//牌坊标记
+	      var infoWindow_2 = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true,  //使用自定义窗体
+        content:'<div><a href="#C牌坊">牌坊</a></div>', //信息窗体的内容可以是任意html片段
+        offset: new AMap.Pixel(0, -30)//第一个数字表示信息内容左右偏移，第二个表示上下偏移
+    });
+    var onMarkerClick  =  function(e) {
+        infoWindow_2.open(map, e.target.getPosition());//打开信息窗体
+        //e.target就是被点击的Marker
+    } 
+    var marker = new AMap.Marker({
+         position: [114.359148, 30.533711] //经纬度位置
+    })
+    map.add(marker);//添加到地图
+    marker.on('click',onMarkerClick);//绑定click事件
+	
+	
+//樱花城堡标记
+	      var infoWindow_3 = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true,  //使用自定义窗体
+        content:'<div><a href="#C樱花城堡">樱花城堡</a></div>', //信息窗体的内容可以是任意html片段
+        offset: new AMap.Pixel(0, -30)//第一个数字表示信息内容左右偏移，第二个表示上下偏移
+    });
+    var onMarkerClick  =  function(e) {
+        infoWindow_3.open(map, e.target.getPosition());//打开信息窗体
+        //e.target就是被点击的Marker
+    } 
+    var marker = new AMap.Marker({
+         position: [114.364152, 30.539515] //经纬度位置
+    })
+    map.add(marker);//添加到地图
+    marker.on('click',onMarkerClick);//绑定click事件
+	
+	
+//万林博物馆标记
+	      var infoWindow_4 = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true,  //使用自定义窗体
+        content:'<div><a href="#C万林博物馆">万林博物馆</a></div>', //信息窗体的内容可以是任意html片段
+        offset: new AMap.Pixel(0, -30)//第一个数字表示信息内容左右偏移，第二个表示上下偏移
+    });
+    var onMarkerClick  =  function(e) {
+        infoWindow_4.open(map, e.target.getPosition());//打开信息窗体
+        //e.target就是被点击的Marker
+    } 
+    var marker = new AMap.Marker({
+         position: [114.362432, 30.537071] //经纬度位置
+    })
+    map.add(marker);//添加到地图
+    marker.on('click',onMarkerClick);//绑定click事件
+	
+
+//鲲鹏广场标记
+	      var infoWindow_5 = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true,  //使用自定义窗体
+        content:'<div><a href="#C鲲鹏广场">鲲鹏广场</a></div>', //信息窗体的内容可以是任意html片段
+        offset: new AMap.Pixel(0, -30)//第一个数字表示信息内容左右偏移，第二个表示上下偏移
+    });
+    var onMarkerClick  =  function(e) {
+        infoWindow_5.open(map, e.target.getPosition());//打开信息窗体
+        //e.target就是被点击的Marker
+    } 
+    var marker = new AMap.Marker({
+         position: [114.362278, 30.538392] //经纬度位置
+    })
+    map.add(marker);//添加到地图
+    marker.on('click',onMarkerClick);//绑定click事件
+	
+	
+//梅操标记
+	      var infoWindow_6 = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true,  //使用自定义窗体
+        content:'<div><a href="#C梅操">梅操</a></div>', //信息窗体的内容可以是任意html片段
+        offset: new AMap.Pixel(0, -30)//第一个数字表示信息内容左右偏移，第二个表示上下偏移
+    });
+    var onMarkerClick  =  function(e) {
+        infoWindow_6.open(map, e.target.getPosition());//打开信息窗体
+        //e.target就是被点击的Marker
+    } 
+    var marker = new AMap.Marker({
+         position: [114.365254, 30.538265] //经纬度位置
+    })
+    map.add(marker);//添加到地图
+    marker.on('click',onMarkerClick);//绑定click事件
+	
+	
+//教五标记
+	      var infoWindow_7 = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true,  //使用自定义窗体
+        content:'<div><a href="#C教五">教五</a></div>', //信息窗体的内容可以是任意html片段
+        offset: new AMap.Pixel(0, -30)//第一个数字表示信息内容左右偏移，第二个表示上下偏移
+    });
+    var onMarkerClick  =  function(e) {
+        infoWindow_7.open(map, e.target.getPosition());//打开信息窗体
+        //e.target就是被点击的Marker
+    } 
+    var marker = new AMap.Marker({
+         position: [114.361039, 30.536343] //经纬度位置
+    })
+    map.add(marker);//添加到地图
+    marker.on('click',onMarkerClick);//绑定click事件
+	
+	
+//当代楼标记
+	      var infoWindow_8 = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true,  //使用自定义窗体
+        content:'<div><a href="#C当代楼">当代楼</a></div>', //信息窗体的内容可以是任意html片段
+        offset: new AMap.Pixel(0, -30)//第一个数字表示信息内容左右偏移，第二个表示上下偏移
+    });
+    var onMarkerClick  =  function(e) {
+        infoWindow_8.open(map, e.target.getPosition());//打开信息窗体
+        //e.target就是被点击的Marker
+    } 
+    var marker = new AMap.Marker({
+         position: [114.359533, 30.533102] //经纬度位置
+    })
+    map.add(marker);//添加到地图
+    marker.on('click',onMarkerClick);//绑定click事件
+	
+	
+//九一二广场标记
+	      var infoWindow_9 = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true,  //使用自定义窗体
+        content:'<div><a href="#C九一二广场">九一二广场</a></div>', //信息窗体的内容可以是任意html片段
+        offset: new AMap.Pixel(0, -30)//第一个数字表示信息内容左右偏移，第二个表示上下偏移
+    });
+    var onMarkerClick  =  function(e) {
+        infoWindow_9.open(map, e.target.getPosition());//打开信息窗体
+        //e.target就是被点击的Marker
+    } 
+    var marker = new AMap.Marker({
+         position: [114.366382, 30.538828] //经纬度位置
+    })
+    map.add(marker);//添加到地图
+    marker.on('click',onMarkerClick);//绑定click事件
+	
+	
+//桂操标记
+	      var infoWindow_10 = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true,  //使用自定义窗体
+        content:'<div><a href="#C桂操">桂操</a></div>', //信息窗体的内容可以是任意html片段
+        offset: new AMap.Pixel(0, -30)//第一个数字表示信息内容左右偏移，第二个表示上下偏移
+    });
+    var onMarkerClick  =  function(e) {
+        infoWindow_10.open(map, e.target.getPosition());//打开信息窗体
+        //e.target就是被点击的Marker
+    } 
+    var marker = new AMap.Marker({
+         position: [114.360945, 30.537626] //经纬度位置
+    })
+    map.add(marker);//添加到地图
+    marker.on('click',onMarkerClick);//绑定click事件
+	
+	
+ </script>
+		</div>
+		<!--图文卡片 入学-->
+		<div class="unit">
+			<a name="C卓尔体育馆"></a>
+			<div class="unit_text_normal" id="text">
+				终于收到了录取通知书，未来四年武大请多指教。
+				<br><br>
+				卓尔体育馆是我们新生第一讲的地方，梦开始的地方！
+			</div>
+			<img class="unit_pic" id="pic1" src="thumbnail/图片1.jpg" alt="终于收到了录取通知书，未来四年武大请多指教">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic1");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片1.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic4" src="thumbnail/图片4.jpg" alt="卓尔体育馆是我们新生第一讲的地方，梦开始的地方！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic4");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片4.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		<!--图文卡片 牌坊-->
+		<div class="unit">
+			<a name="C牌坊"></a>
+			<div class="unit_text_normal" id="text">
+				牌坊啊，国立网红大学的标志性建筑啦~
+				<br><br>
+				校训是每一个武大学子都应该记住的人生格言。
+			</div>
+			<img class="unit_pic" id="pic8" src="thumbnail/图片8.jpg" alt="牌坊啊，国立网红大学的标志性建筑啦~">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic8");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片8.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic9" src="thumbnail/图片9.jpg" alt="牌坊啊，国立网红大学的标志性建筑啦~">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic9");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片9.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic14" src="thumbnail/图片14.jpg" alt="校训是每一个武大学子都应该记住的人生格言">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic14");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片14.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		
+		<!--图文卡片 万林-->
+		<div class="unit">
+			<a name="C万林博物馆"></a>
+			<div class="unit_text_normal" id="text">
+				万林博物馆，不规则的形状透露出了难以模仿的霸气，里面的展览品也非常棒呢！
+			</div>
+			<img class="unit_pic" id="pic2" src="thumbnail/图片2.jpg" alt="万林博物馆">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic2");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片2.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic3" src="thumbnail/图片3.jpg" alt="万林博物馆">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic3");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片3.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		<!--图文卡片 樱花城堡-->
+		<div class="unit">
+			<a name="C樱花城堡"></a>
+			<div class="unit_text_normal" id="text">
+				吹爆我樱花城堡！
+			</div>
+			<img class="unit_pic" id="pic5" src="thumbnail/图片5.jpg" alt="吹爆我樱花城堡！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic5");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片5.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic6" src="thumbnail/图片6.jpg" alt="吹爆我樱花城堡！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic6");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片6.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		<!--图文卡片 建筑-->
+		<div class="unit">
+			<a name="C当代楼"></a>
+			<a name="C教五"></a>
+			<a name="C行政楼"></a>
+			
+			<div class="unit_text_normal" id="text">
+				感觉我武的建筑都有着一种非凡的气质啊。
+				<br><br>
+				老图书馆是举行重大会议的地方，看起来就显得庄严神秘呢。
+				<br>
+				教五就是同学们经常上课的地方啦。
+				<br>
+				当代楼是不是长得很当代呢，这可是今年最新投入使用的哦。
+			</div>
+			<img class="unit_pic" id="pic12" src="thumbnail/图片12.jpg" alt="老图书馆是举行重大会议的地方，看起来就显得庄严神秘呢">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic12");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片12.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic15" src="thumbnail/图片15.jpg" alt="教五就是同学们经常上课的地方啦">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic15");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片15.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic10" src="thumbnail/图片10.jpg" alt="现代楼是不是长得很现代呢，这可是今年最新投入使用的哦">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic10");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片10.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		<!--图文卡片 广场-->
+		<div class="unit">
+			<a name="C九一二广场"></a>
+			<a name="C鲲鹏广场"></a>
+			<div class="unit_text_normal" id="text">
+				逛逛武大的广场。九一二广场可是毛主席来过的地方噢~
+				<br><br>
+				鲲鹏广场：北冥有鱼其名为鲲鸭！
+			</div>
+			<img class="unit_pic" id="pic7" src="thumbnail/图片7.jpg" alt="九一二广场可是毛主席来过的地方噢~">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic7");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片7.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic13" src="thumbnail/图片13.jpg" alt="鲲鹏广场：北冥有鱼其名为鲲鸭！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic13");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片13.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		<!--图文卡片 操场-->
+		<div class="unit">
+			<a name="C桂操"></a>
+			<a name="C梅操"></a>
+			<div class="unit_text_normal" id="text">
+				再看看武大的操场。如此美丽的桂操是不是瞬间就打动了你呢？
+				<br><br>
+				看一次梅操小电影可是武汉大学必须达成的成就之一。
+			</div>
+			<img class="unit_pic" id="pic16" src="thumbnail/图片16.jpg" alt="如此美丽的桂操是不是瞬间就打动了你呢？">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic16");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片16.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic11" src="thumbnail/图片11.jpg" alt="看一次梅操小电影可是武汉大学必须达成的成就之一。">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic11");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片11.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		
+	</div>
+</div>
+<br>
+
+
+<div style="clear:both;">
+	<!--
+	<p>传送门</p>
+	<a href="?">学术珞珈</a>
+	<br>
+	<a href="?">武大官网</a>
+	-->
+</div>
+
+
+</body>
+</html>
