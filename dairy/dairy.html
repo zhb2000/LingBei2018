@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no">
+<title>珞珈日记</title>
+<link rel="stylesheet" type="text/css" href="dairy.css">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+
+<body>
+
+<!--头部图片-->
+<img class="headpic" src="pic6-1.jpg">
+
+<!--图片预加载-->	
+<div id="preload">
+</div>
+
+<!--导航栏-->
+
+	<ul class="navbar">
+	<div class="center">
+		<li><a href="../main/main.html">精选动态</a></li>
+		<li><a href="../pic/pic.html">图片广场</a></li>
+		<li><a href="../memory/memory.html">珞珈记忆</a></li>
+		<li><a class="active" href="../dairy/dairy.html">珞珈日记</a></li>
+		<li><a href="../food/food.html">寻味珞珈</a></li>
+		<li><a href="../about/about.html">关于我们</a></li>
+		<li style="float:right"><a href="../login/login.html">登录</a></li>
+	</div>
+	</ul>
+	
+
+<!--导航栏2-->
+<div class="navbar2">
+	<img src="menu.svg" id="navbar-menu" style="float:left">
+	<a href="../login/login.html"><img src="account.svg" id="navbar-account" style="float:right"></a>
+</div>
+<!-- 抽屉展开后的遮罩 -->
+<div class="mask"></div>
+<!-- 左侧抽屉 -->
+<div class="drawer">
+	<img src="nav.jpg" id="drawerpic">
+	<ul class="drawernav">
+		<li><a href="../main/main.html">精选动态</a></li>
+		<li><a href="../pic/pic.html">图片广场</a></li>
+		<li><a href="../memory/memory.html">珞珈记忆</a></li>
+		<li><a class="active" href="../dairy/dairy.html">珞珈日记</a></li>
+		<li><a href="../food/food.html">寻味珞珈</a></li>
+		<li><a href="../about/about.html">关于我们</a></li>
+	</ul>
+</div>
+<!-- js：左侧抽屉 -->
+<script>
+var body = document.body;
+var menu = document.getElementById("navbar-menu");
+var drawer = document.querySelector(".drawer");
+var mask = document.querySelector(".mask");
+menu.onclick = function()
+{
+  drawer.style.left = "0";
+  mask.style.display = "block";
+  body.style.overflow = "hidden";
+}
+mask.onclick = function()
+{
+    drawer.style.left = "-300px";
+    mask.style.display = "none";
+	body.style.overflow = "auto";
+}
+</script>
+	
+	
+<!--模态窗口(图片)-->
+<div id="myModal" class="modal">
+  <img class="modal-content" id="pop_pic" onload="picSizeFunction(this)">
+  <div id="caption"></div>
+</div>
+
+<!--模态窗口（编写）-->
+<div id="myModal3" class="modal3">
+	
+	<div class="modal-content3" id="pop_contant3">
+		<div class="close3">×</div>
+		<form>
+		<p class="headtext">说点什么吧</p><!--分享你此刻的想法/有什么想和大家分享的？-->
+		<p class="belowtext">标题</p>
+		<input type="text" id="title" maxlength="30" placeholder="在这里填写标题" autocomplete="off">
+		<p class="belowtext">正文</p>
+		<textarea id="article" placeholder="有什么想和大家分享的？" autocomplete="off"></textarea>
+		<!--
+		<input type="file" style="margin-bottom: 12px">
+		<br>
+		-->
+		<input type="checkbox" id="checkbox"></input>
+		<label for="checkbox">匿名发表</label>
+		<button id="sent-button">发布</button>
+		</form>
+	</div>
+	<div id="caption3"></div>
+</div>
+
+<!--悬浮按钮-->
+<div class="floating_button">
+	<div id="tooltip1"><img id="button1" src="button1.svg"><span id="tooltiptext1">回到顶部</span></div>
+	<div id="tooltip2"><img id="button2" src="button2.svg"><span id="tooltiptext2">发表动态</span></div>
+	<!--js：编写窗口-->
+		<script>
+		// 获取模态窗口
+		var modal3 = document.getElementById("myModal3");
+		var body = document.body;
+		// 获取编写模态框
+		var button2 = document.getElementById("button2");
+		button2.onclick = function()
+		{
+			modal3.style.display = "block";
+			body.style.overflow = "hidden";
+		}
+
+		// 获取 <span> 元素，设置关闭模态框按钮
+		var span = document.getElementsByClassName("close3")[0];
+
+		// 点击 <span> 元素上的叉, 关闭模态窗口
+		span.onclick = function()
+		{ 
+			modal3.style.display = "none";
+			body.style.overflow = "auto";
+		}
+		</script>
+</div>
+
+<!--js：回到顶部-->
+<script>
+window.addEventListener('scroll',winScroll);
+var button1 = document.getElementById("button1");
+function winScroll() //滚动监听，控制回顶按钮显示或消失
+{
+	if(document.body.scrollTop > 250 || document.documentElement.scrollTop > 250)
+		button1.style.display = "block";
+	else
+		button1.style.display = "none";
+}
+
+/*滚动回顶*/
+var timer  = null;
+button1.onclick = function(){
+    cancelAnimationFrame(timer);
+    
+    var startTime = +new Date();  //获取当前毫秒数   
+    
+    var b = document.body.scrollTop || document.documentElement.scrollTop;//获取当前页面的滚动高度
+    var d = 500; //500ms
+    var c = b;
+    timer = requestAnimationFrame(function func(){
+        var t = d - Math.max(0,startTime - (+new Date()) + d);
+        document.documentElement.scrollTop = document.body.scrollTop = t * (-c) / d + b;
+        timer = requestAnimationFrame(func);
+        if(t == d){
+          cancelAnimationFrame(timer);
+        }
+    });
+}
+</script>
+
+
+<!--容器-->
+
+<div class="container">
+
+	<div class="column">
+		<!--图文卡片 樱花-->
+		<div class="unit">
+			<div class="unit_text_normal" id="text">
+				每天去看一次还没有绽放的樱花，这可是我每天的日常呢。
+				<br><br>
+				终于等到了秋樱，这是秋樱！提前开放的樱花也是一枝独秀，别有风味。
+			</div>
+			<img class="unit_pic" id="pic1" src="thumbnail/图片1.jpg" alt="每天去看一次还没有绽放的樱花，这可是我每天的日常呢">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic1");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片1.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic18" src="thumbnail/图片18.jpg" alt="提前开放的樱花也是一枝独秀，别有风味">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic18");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片18.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		
+		<!--图文卡片 吃货-->
+		<div class="unit">
+			<div class="unit_text_normal" id="text">
+				吃吃吃！作为一枚吃货怎么不能吃呢！
+			</div>
+			<img class="unit_pic" id="pic5" src="thumbnail/图片5.jpg" alt="吃吃吃！作为一枚吃货怎么不能吃呢！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic5");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片5.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic6" src="thumbnail/图片6.jpg" alt="吃吃吃！作为一枚吃货怎么不能吃呢！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic6");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片6.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic7" src="thumbnail/图片7.jpg" alt="吃吃吃！作为一枚吃货怎么不能吃呢！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic7");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片7.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		<!--图文卡片 随意一瞥-->
+		<div class="unit">
+			<div class="unit_text_normal" id="text">
+				随意的一瞥都是美景！
+			</div>
+			<img class="unit_pic" id="pic9" src="thumbnail/图片9.jpg" alt="随意的一瞥都是美景！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic9");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片9.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic10" src="thumbnail/图片10.jpg" alt="随意的一瞥都是美景！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic10");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片10.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic11" src="thumbnail/图片11.jpg" alt="随意的一瞥都是美景！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic11");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片11.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic12" src="thumbnail/图片12.jpg" alt="随意的一瞥都是美景！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic12");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片12.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		<!--图文卡片 出去玩-->
+		<div class="unit">
+			<div class="unit_text_normal" id="text">
+				信部的孩子怎么可以不好好利用毗邻银泰创意城这个绝妙的地理位置呢！
+				周末当然要出去好好玩耍来弥补平时刻苦努力的自己！
+				和同学一起出去玩耍的时候夹娃娃可是不能错过的噢。
+			</div>
+			<img class="unit_pic" id="pic13" src="thumbnail/图片13.jpg" alt="周末当然要出去好好玩耍">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic13");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片13.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic21" src="thumbnail/图片21.jpg" alt="夹娃娃可是不能错过的噢">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic21");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片21.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic22" src="thumbnail/图片22.jpg" alt="夹娃娃可是不能错过的噢">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic22");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片22.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		<!--图文卡片 美景和美食-->
+		<div class="unit">
+			<div class="unit_text_normal" id="text">
+				听说美食和美景更配噢，在武大吃完美食就可出去逛东湖的美景，惬意人生。
+			</div>
+			<img class="unit_pic" id="pic14" src="thumbnail/图片14.jpg" alt="吃完美食就可出去逛东湖的美景">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic14");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片14.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic15" src="thumbnail/图片15.jpg" alt="美食，惬意人生">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic15");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片15.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		<!--图文卡片 考试-->
+		<div class="unit">
+			<div class="unit_text_normal" id="text">
+				大家都在讨论物联网考试最后一题：如何避免下课期间楼道拥堵
+				<br><br>
+				我觉得其实很简单嘛。
+				<br><br>
+				解决方案：迟到、早退
+				<br>
+				优点： 避开高峰期
+				<br>
+				缺点：可能会漏掉部分上课内容
+				<br>
+				所需设备：一颗勇敢的心
+			</div>
+			<img class="unit_pic" id="pic23" src="thumbnail/图片23.jpg" alt="丢人">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic23");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片23.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic25" src="thumbnail/图片25.jpg" alt="走吧，别丢人了">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic25");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片25.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic26" src="thumbnail/图片26.jpg" alt="走吧，别丢人了">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic26");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片26.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		<!--图文卡片 买-->
+		<div class="unit">
+			<div class="unit_text_normal" id="text">
+				买买买，我要把这些可爱的东东全部带回家！
+			</div>
+			<img class="unit_pic" id="pic16" src="thumbnail/图片16.jpg" alt="买买买，我要把这些可爱的东东全部带回家！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic16");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片16.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		<img class="unit_pic" id="pic17" src="thumbnail/图片17.jpg" alt="买买买，我要把这些可爱的东东全部带回家！">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic17");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片17.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+		<!--图文卡片 体育-->
+		<div class="unit">
+			<div class="unit_text_normal" id="text">
+				这两周荒废训练的破状态
+				<br>
+				赢一场院内选拔都不容易啊
+				<br>
+				没有信念的体测100和带着信仰的1500真的差别太大
+				<br>
+				清风的信仰是不能输的约定
+				<br>
+				想象着旁边有同样的步伐和节奏
+				<br>
+				想象中另一双清风就在并排向前
+				<br>
+				似乎又有了一些冲刺的动力
+				<br>
+				还是不似当年那么强烈的信念和动力
+				<br>
+				就等你了
+				<br>
+				我们的第7年长跑
+				<br>
+				会是两双并排向前的清风
+			</div>
+			<img class="unit_pic" id="pic20" src="thumbnail/图片20.jpg" alt="就等你了">
+		<!--js：弹出大图-->
+		<script>
+		// 获取模态窗口
+		var modal = document.getElementById("myModal");
+		// 获取图片模态框，alt 属性作为图片弹出中文本描述
+		var img = document.getElementById("pic20");
+		var modalImg = document.getElementById("pop_pic");
+		var captionText = document.getElementById("caption");
+		img.onclick = function()
+		{
+			modal.style.display = "flex";
+			modalImg.src = "图片20.jpg";
+			modalImg.alt = this.alt;
+			captionText.innerHTML = this.alt;
+		}
+
+		//关闭模态窗口
+		modal.onclick = function()
+		{ 
+			modal.style.display = "none";
+		}
+		</script>
+		
+		</div>
+	
+	</div>
+</div>
+<br>
+
+<div style="clear:both;">
+	<!--
+	<p>传送门</p>
+	<a href="?">学术珞珈</a>
+	<br>
+	<a href="?">武大官网</a>
+	-->
+</div>
+
+
+</body>
+</html>
